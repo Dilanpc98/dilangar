@@ -26,17 +26,19 @@ use yii\widgets\ActiveForm;
     <?php //$form->field($model, 'Portada')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'imageFile')->fileInput()->label('Selecionar Portada')?>
 
-    <?= $form->field($model, 'modelo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'modelo')->textInput(['maxlength' => true, 'placeholder' => 'Modelo del carro', 'required'=>true]) ?>
 
-    <?= $form->field($model, 'anio')->textInput() ?>
+    <?= $form->field($model, 'anio')->input(['number', 'min' => 1900, 'max' => date('Y')]) 
+                                    ->textInput(['pattern'=> '\d{4}', 'title' => 'Debe ser un año de 4 digitos', 'placeholder' => 'YYYY', 'required' => true]) ?>
 
-    <?= $form->field($model, 'precio')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'precio')->input(['number', 'min' => 1000, 'max' => 999999999])
+                                      ->textInput(['pattern' => '\d{9}','title' => 'Debe ser un precio de 9 digitos', 'placeholder' => 'Precio del auto', 'required'=>true]) ?>
 
-    <?= $form->field($model, 'color')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'color')->textInput(['maxlength' => true, 'placeholder' => 'Color del auto', 'required'=>true]) ?>
 
-    <?= $form->field($model, 'motor')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'motor')->textInput(['maxlength' => true, 'placeholder' => 'Motor del auto', 'required'=>true]) ?>
 
-    <?= $form->field($model, 'tipo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'tipo')->textInput(['maxlength' => true, 'placeholder' => 'Tipo de auto', 'required'=>true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
