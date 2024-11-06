@@ -30,6 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id_auto',
+            //'Portada',
+            [
+                'attribute' => 'portada',
+                'format' => 'html',
+                'value' => function($model){
+                    return Html::img(Yii::getAlias('@web') . '/portadas/' . $model->portada, ['style' => 'width: 200px']);
+                }
+            ],
             'modelo',
             'anio',
             'precio',

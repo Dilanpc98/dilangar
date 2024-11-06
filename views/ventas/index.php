@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'fk_id_cliente',
             'fecha_venta',
             'cantidad',
-            //'total',
+            'total',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Ventas $model, $key, $index, $column) {

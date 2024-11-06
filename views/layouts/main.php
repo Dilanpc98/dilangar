@@ -40,14 +40,19 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Autos', 'url' => ['/autos/index']],
-            ['label' => 'Clientes', 'url' => ['/clientes/index']],
-            ['label' => 'Concesionarios', 'url' => ['/concesionarios/index']],
-            ['label' => 'Servicios Postventa', 'url' => ['/serviciospostventa/index']],
-            ['label' => 'Ventas', 'url' => ['/ventas/index']],
-            ['label' => 'Sobre nosotros', 'url' => ['/site/about']],
-            ['label' => 'Contactenos', 'url' => ['/site/contact']],
-            
+            //['label' => 'Sobre nosotros', 'url' => ['/site/about']],
+            //['label' => 'Contactenos', 'url' => ['/site/contact']],
+            [
+                'label' => 'Gestion Concesionaria',
+                'items' => 
+                [   
+                    ['label' => 'Autos', 'url' => ['/autos/index']],
+                    ['label' => 'Clientes', 'url' => ['/clientes/index']],
+                    ['label' => 'Concesionarios', 'url' => ['/concesionarios/index']],
+                    ['label' => 'Servicios Postventa', 'url' => ['/serviciospostventa/index']],
+                    ['label' => 'Ventas', 'url' => ['/ventas/index']],
+                ],
+            ],
             Yii::$app->user->isGuest
                 ? ['label' => 'Iniciar sesión', 'url' => ['/site/login']]
                 : '<li class="nav-item">'

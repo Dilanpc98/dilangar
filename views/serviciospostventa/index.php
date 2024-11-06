@@ -35,8 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'fk_id_cliente',
             'fk_id_concesionario',
             'tipo_servicio',
-            //'fecha_servicio',
-            //'costo',
+            'fecha_servicio',
+            'costo',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, ServiciosPostventa $model, $key, $index, $column) {

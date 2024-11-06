@@ -20,13 +20,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_auto') ?>
 
+    <?= $form->field($model, 'Portada') ?>
+
     <?= $form->field($model, 'modelo') ?>
 
     <?= $form->field($model, 'anio') ?>
 
     <?= $form->field($model, 'precio') ?>
 
-    <?= $form->field($model, 'color') ?>
+    <?php // echo $form->field($model, 'color') ?>
 
     <?php // echo $form->field($model, 'motor') ?>
 

@@ -18,7 +18,7 @@ class AutosSearch extends Autos
     {
         return [
             [['id_auto', 'anio'], 'integer'],
-            [['modelo', 'color', 'motor', 'tipo'], 'safe'],
+            [['Portada', 'modelo', 'color', 'motor', 'tipo'], 'safe'],
             [['precio'], 'number'],
         ];
     }
@@ -64,7 +64,8 @@ class AutosSearch extends Autos
             'precio' => $this->precio,
         ]);
 
-        $query->andFilterWhere(['like', 'modelo', $this->modelo])
+        $query->andFilterWhere(['like', 'Portada', $this->Portada])
+            ->andFilterWhere(['like', 'modelo', $this->modelo])
             ->andFilterWhere(['like', 'color', $this->color])
             ->andFilterWhere(['like', 'motor', $this->motor])
             ->andFilterWhere(['like', 'tipo', $this->tipo]);

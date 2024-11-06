@@ -2,11 +2,13 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Autos;
 use app\models\AutosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * AutosController implements the CRUD actions for Autos model.
@@ -68,17 +70,35 @@ class AutosController extends Controller
     public function actionCreate()
     {
         $model = new Autos();
+        $message = '';
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_auto' => $model->id_auto]);
-            }
-        } else {
-            $model->loadDefaultValues();
+           $transaction = Yii::$app->db->beginTransaction();
+           try {
+                if ($model->load($this->request->post())){
+                    $model->imagiFile = UploadedFile::getInstance($model, 'imageFile');
+                   if($model->save() && (!$model->imageFile || $model->upload())){
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id_auto' => $model->id_auto]);
+                   }else{
+                        $message= 'Error al cargar el Auto';
+                        $transaction->rollBack();
+                   } 
+                }else{
+                    $message = 'Error al cargar la portada';
+                    $transaction->rollBack();
+                }
+                }catch(\Exception $e){
+                    $transaction->rollBack();
+                    $message = 'Error al guardar el auto';
+                }
+        }else{
+            $model->loadDefaulValues();
         }
-
-        return $this->render('create', [
+          
+           return $this->render('create', [
             'model' => $model,
+            'message' => $message,
         ]);
     }
 
@@ -92,13 +112,20 @@ class AutosController extends Controller
     public function actionUpdate($id_auto)
     {
         $model = $this->findModel($id_auto);
+        $message= '';
+        if($this->request->isPost && $model->load($this->request->post())){
+            $model-> imageFile = UploadedFile::getInstance($model, 'imageFile');
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_auto' => $model->id_auto]);
+            if($model->save() && (!$model->imageFile || $mode-> upload())){
+                return $this->redirect(['view', 'id_auto'=> $model->id_auto]);
+            }else{
+                $message = 'Error al guardar el auto';
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'message' => $message,
         ]);
     }
 
@@ -111,9 +138,10 @@ class AutosController extends Controller
      */
     public function actionDelete($id_auto)
     {
-        $this->findModel($id_auto)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id_auto);
+        $model->deletePortada();
+        $model->delete();
+            return $this->redirect(['index']);
     }
 
     /**

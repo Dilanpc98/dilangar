@@ -10,7 +10,21 @@ use yii\widgets\ActiveForm;
 
 <div class="autos-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => ['enctype' => 'multipart/form-data']
+    ]); ?>
+
+    <?php if($model->portada): ?>
+        <div class="from-group">
+            <?= Html::label('Imagen Actual') ?>
+            <div>
+                <?= Html::img(Yii::getAlias('@web' . '/portadas/' . $model->portada, ['style' => 'width: 200px; ']))?> 
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php //$form->field($model, 'Portada')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'imageFile')->fileInput()->label('Selecionar Portada')?>
 
     <?= $form->field($model, 'modelo')->textInput(['maxlength' => true]) ?>
 

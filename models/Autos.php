@@ -3,23 +3,26 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "Autos".
  *
  * @property int $id_auto
+ * @property string $Portada
  * @property string $modelo
  * @property int $anio
  * @property float $precio
- * @property string|null $color
- * @property string|null $motor
- * @property string|null $tipo
+ * @property string $color
+ * @property string $motor
+ * @property string $tipo
  *
  * @property ServiciosPostventa[] $serviciosPostventas
  * @property Ventas[] $ventas
  */
 class Autos extends \yii\db\ActiveRecord
 {
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -34,11 +37,13 @@ class Autos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['modelo', 'anio', 'precio'], 'required'],
+            [['Portada', 'modelo', 'anio', 'precio', 'color', 'motor', 'tipo'], 'required'],
             [['anio'], 'integer'],
             [['precio'], 'number'],
+            [['Portada'], 'string', 'max' => 45],
             [['modelo'], 'string', 'max' => 100],
             [['color', 'motor', 'tipo'], 'string', 'max' => 50],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg' ]
         ];
     }
 
@@ -49,6 +54,7 @@ class Autos extends \yii\db\ActiveRecord
     {
         return [
             'id_auto' => Yii::t('app', 'Id Auto'),
+            'Portada' => Yii::t('app', 'Portada'),
             'modelo' => Yii::t('app', 'Modelo'),
             'anio' => Yii::t('app', 'Anio'),
             'precio' => Yii::t('app', 'Precio'),
@@ -58,10 +64,42 @@ class Autos extends \yii\db\ActiveRecord
         ];
     }
 
+    public function upload(){
+        if($this->validate()){
+            if($this->isNewRecord){
+                if(!$this->save(false)){
+                    return false;
+                }
+            }
+ 
+            if($this->imageFile instanceof UploadedFile){
+                $filename = $this->id_auto . '.' . $this->anion . '_modelo_' . date('Ymd_His') . '.' . $this-> imageFile->extension;
+            $path = Yii::getAlias('@webroot/portadas/') . $filename;
+
+            if($this->imageFile->saveAs($path)){
+                if($this->portada && $this->portada !== $filename){
+                    $this->deletePortada();
+                }
+                
+                $this->portada = $filename;
+                }
+             }
+             return $this->save(false);
+        }
+        return false;
+    }
+
+    public function deletePortada(){
+        $path = Yii::getAlias('@webroot/portadas/') . $this->portadas;
+            if(file_exists($path)){
+                unlink($path);
+            }
+        }
+
     /**
      * Gets query for [[ServiciosPostventas]].
      *
-     * @return \yii\db\ActiveQuery|ServiciosPostventaQuery
+     * @return \yii\db\ActiveQuery|ServiciospostventaQuery
      */
     public function getServiciosPostventas()
     {
