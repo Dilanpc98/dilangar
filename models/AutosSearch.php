@@ -64,7 +64,7 @@ class AutosSearch extends Autos
             'precio' => $this->precio,
         ]);
 
-        $query->andFilterWhere(['like', 'Portada', $this->Portada])
+        $query->andFilterWhere(['like', 'portada', $this->portada])
             ->andFilterWhere(['like', 'modelo', $this->modelo])
             ->andFilterWhere(['like', 'color', $this->color])
             ->andFilterWhere(['like', 'motor', $this->motor])

@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_auto') ?>
 
-    <?= $form->field($model, 'Portada') ?>
+    <?= $form->field($model, 'portada') ?>
 
     <?= $form->field($model, 'modelo') ?>
 

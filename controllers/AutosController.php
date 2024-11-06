@@ -93,7 +93,7 @@ class AutosController extends Controller
                     $message = 'Error al guardar el auto';
                 }
         }else{
-            $model->loadDefaulValues();
+            $model->loadDefaultValues();
         }
           
            return $this->render('create', [
