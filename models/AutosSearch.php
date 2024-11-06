@@ -18,7 +18,7 @@ class AutosSearch extends Autos
     {
         return [
             [['id_auto', 'anio'], 'integer'],
-            [['Portada', 'modelo', 'color', 'motor', 'tipo'], 'safe'],
+            [['portada', 'modelo', 'color', 'motor', 'tipo'], 'safe'],
             [['precio'], 'number'],
         ];
     }

@@ -9,7 +9,7 @@ use yii\web\UploadedFile;
  * This is the model class for table "Autos".
  *
  * @property int $id_auto
- * @property string $Portada
+ * @property string $portada
  * @property string $modelo
  * @property int $anio
  * @property float $precio
@@ -37,13 +37,13 @@ class Autos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Portada', 'modelo', 'anio', 'precio', 'color', 'motor', 'tipo'], 'required'],
+            [['portada', 'modelo', 'anio', 'precio', 'color', 'motor', 'tipo'], 'required'],
             [['anio'], 'integer'],
             [['precio'], 'number'],
-            [['Portada'], 'string', 'max' => 45],
+            [['portada'], 'string', 'max' => 45],
             [['modelo'], 'string', 'max' => 100],
             [['color', 'motor', 'tipo'], 'string', 'max' => 50],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg' ]
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg' ]
         ];
     }
 
@@ -54,7 +54,7 @@ class Autos extends \yii\db\ActiveRecord
     {
         return [
             'id_auto' => Yii::t('app', 'Id Auto'),
-            'Portada' => Yii::t('app', 'Portada'),
+            'portada' => Yii::t('app', 'Portada'),
             'modelo' => Yii::t('app', 'Modelo'),
             'anio' => Yii::t('app', 'Anio'),
             'precio' => Yii::t('app', 'Precio'),
@@ -73,7 +73,7 @@ class Autos extends \yii\db\ActiveRecord
             }
  
             if($this->imageFile instanceof UploadedFile){
-                $filename = $this->id_auto . '.' . $this->anion . '_modelo_' . date('Ymd_His') . '.' . $this-> imageFile->extension;
+                $filename = $this->id_auto . '.' . $this->anio . '_modelo_' . date('Ymd_His') . '.' . $this-> imageFile->extension;
             $path = Yii::getAlias('@webroot/portadas/') . $filename;
 
             if($this->imageFile->saveAs($path)){

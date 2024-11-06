@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="autos-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+        <?= $message ?>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

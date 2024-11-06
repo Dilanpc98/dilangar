@@ -76,7 +76,7 @@ class AutosController extends Controller
            $transaction = Yii::$app->db->beginTransaction();
            try {
                 if ($model->load($this->request->post())){
-                    $model->imagiFile = UploadedFile::getInstance($model, 'imageFile');
+                    $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
                    if($model->save() && (!$model->imageFile || $model->upload())){
                     $transaction->commit();
                     return $this->redirect(['view', 'id_auto' => $model->id_auto]);
@@ -90,7 +90,7 @@ class AutosController extends Controller
                 }
                 }catch(\Exception $e){
                     $transaction->rollBack();
-                    $message = 'Error al guardar el auto';
+                    $message = 'Error al guardar el auto' . $e;
                 }
         }else{
             $model->loadDefaultValues();
