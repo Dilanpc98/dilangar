@@ -44,8 +44,37 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'modelo',
             'anio',
-            'precio',
-            'color',
+            //'precio',
+            [
+                'attribute' => 'precio', // Cambia 'color' a 'price' o al atributo que contenga el valor en dólares
+                'format' => 'html',
+                'value' => function(Autos $model) {
+                if ($model->precio !== null) { // Asegúrate de que el precio no sea nulo
+                // Formatea el precio en dólares y lo devuelve como un texto HTML
+                return Html::tag('span', '$' . number_format($model->precio, 2), [
+                'style' => 'font-weight: bold;' // Estilo opcional para el texto
+            ]);
+        }
+        return null;
+    }
+            ],
+            
+            //'color',
+            [
+                'attribute' => 'color',
+                'format' => 'html',
+                'value' => function(Autos $model) {
+                if ($model->color) {
+            // Devuelve un div con el color de fondo y un texto que muestra el código del color
+                return Html::tag('div', '', [
+                'style' => 'width: 50px; height: 20px; background-color: ' . Html::encode($model->color) . '; display: inline-block; border: 1px solid #000;',
+                'title' => Html::encode($model->color) // Muestra el código del color como título
+            ]);
+        }
+        return null;
+    }
+               
+            ],
             'motor',
             'tipo',
             [
