@@ -37,7 +37,7 @@ class Autos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['portada', 'modelo', 'anio', 'precio', 'color', 'motor', 'tipo'], 'required'],
+            [[ 'modelo', 'anio', 'precio', 'color', 'motor', 'tipo'], 'required'],
             [['anio'], 'integer'],
             [['precio'], 'number'],
             [['portada'], 'string', 'max' => 45],
@@ -90,11 +90,14 @@ class Autos extends \yii\db\ActiveRecord
     }
 
     public function deletePortada(){
-        $path = Yii::getAlias('@webroot/portadas/') . $this->portadas;
+        if($this->portada != '' && $this->portada != null){
+            $path = Yii::getAlias('@webroot/portadas/') . $this->portada;
             if(file_exists($path)){
                 unlink($path);
             }
         }
+       
+    }
 
     /**
      * Gets query for [[ServiciosPostventas]].
