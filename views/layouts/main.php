@@ -51,14 +51,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     ['label' => 'Concesionarios', 'url' => ['/concesionarios/index']],
                     ['label' => 'Servicios Postventa', 'url' => ['/serviciospostventa/index']],
                     ['label' => 'Ventas', 'url' => ['/ventas/index']],
+                    ( !Yii::$app->user->isGuest && Yii::$app->user->identity->role != 'admin') ? '' : [ 'label' => 'User', 'url' => ['/user/index']]
                 ],
             ],
+            Yii::$app->user->isGuest ? '' : ['label' => 'Cambiar contraseña', 'url' => ['/user/change-password']],
+            
             Yii::$app->user->isGuest
                 ? ['label' => 'Iniciar sesión', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
                     . Html::submitButton(
-                        'Cerrar sesión (' . Yii::$app->user->identity->username . ')',
+                        'Cerrar sesión (' . Yii::$app->user->identity->apellido . ' ' . Yii::$app->user->identity->nombre .') ' . Yii::$app->user->identity->role,
                         ['class' => 'nav-link btn btn-link logout']
                     )
                     . Html::endForm()
