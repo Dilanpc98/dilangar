@@ -6,13 +6,21 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\Ventas $model */
 /** @var yii\widgets\ActiveForm $form */
+
+//capturamos id_auto de params
+$id_auto = Yii::$app->request->queryParams['id_auto'];
 ?>
 
 <div class="ventas-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'fk_id_auto')->textInput() ?>
+    <?php
+    if($id_auto != null)
+    {
+        echo $form->field($model, 'fk_id_auto')->textInput(['value' => $id_auto]);
+    }
+     ?>
 
     <?= $form->field($model, 'fk_id_cliente')->textInput() ?>
 

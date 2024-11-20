@@ -1,55 +1,48 @@
 <?php
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 
 $this->title = 'Concesionaria';
 ?>
+
+<style>
+/* CSS para el efecto brillante del botón */
+.shine-button {
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Suaviza la transición */
+}
+
+.shine-button:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 123, 255, 0.8); /* Efecto de brillo */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño del botón */
+}
+</style>
+
 <div class="site-index">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <?php foreach($autos as $auto): ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow border-light"> <!-- Sombra y borde ligero -->
+                        <div class="d-flex justify-content-center">
+                            <img src="<?= Yii::getAlias('@web' . '/portadas/' . $auto->portada) ?>" 
+                                 class="card-img-top img-fluid" 
+                                 alt="Imagen de <?= htmlspecialchars($auto->modelo) ?>" 
+                                 style="height: 200px; object-fit: cover;"> <!-- Imagen responsiva con ajuste -->
+                        </div>
 
-    <div class="jumbotron text-center bg-transparent mt-5 mb-5">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <h3 class= "text-danger">Hola esta es mi nueva pagina</h3>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+                        <div class="card-body text-center"> <!-- Texto centrado -->
+                            <h5 class="card-title"><?= htmlspecialchars($auto->modelo) ?></h5>
+                            <p class="card-text text-success"><?= '$' . number_format($auto->precio, 2) ?></p>
+                            <?= Html::a('Comprar', ['ventas/create', 'id_auto' => $auto->id_auto], [
+                                'class' => 'btn btn-primary btn-lg btn-block shine-button', // Añadido una clase personalizada
+                                'role' => 'button'
+                            ]) ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-
     </div>
 </div>
